@@ -2,32 +2,28 @@ const input = document.querySelector(".form-input");
 const submitButton = document.querySelector(".form-button");
 const todoInner = document.querySelector(".todo-inner");
 
-const arr = [];
-
 const postTask = todo => {
   const task = document.createElement("div");
   const text = document.createElement("p");
   const deleteButton = document.createElement("button");
-
-  let counter = 0;
 
   text.innerHTML = todo;
 
   todoInner.insertAdjacentElement("beforeend", task);
   task.insertAdjacentElement("beforeend", text);
   task.insertAdjacentElement("beforeend", deleteButton);
-  
-  for (key in arr) {
-    if (key == counter) {
-      counter += 1;
-      console.log(counter)
-    } else arr.push(counter);
+
+  let index = 0;
+
+  for (let i = 0; i < localStorage.length; i++) {
+    if (parseInt(localStorage.key(i)) == index) {
+      index += 1;
+    }
   }
 
-  
-  // localStorage.setItem(counter, todo);
+  console.log(index)
 
-  console.log(arr)
+  localStorage.setItem(index, todo);
 
   task.addEventListener("click", () => {
     task.style.textDecoration = "line-through"
