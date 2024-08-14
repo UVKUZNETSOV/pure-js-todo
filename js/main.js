@@ -4,15 +4,8 @@ const todoInner = document.querySelector(".todo-inner");
 
 let counter = localStorage.length;
 
-for (key in localStorage) {
-  console.log(key)
-}
-
-// for (let i = 1; i < 10; i++) {
-//   let value = localStorage.getItem(`task-${i}`);
-//   if (value) {
-//     console.log(value)
-//   }
+// for (key in localStorage) {
+//   console.log(key)
 // }
 
 const postTask = todo => {
@@ -25,8 +18,14 @@ const postTask = todo => {
   todoInner.insertAdjacentElement("beforeend", task);
   task.insertAdjacentElement("beforeend", text);
   task.insertAdjacentElement("beforeend", deleteButton);
+
+  task.classList.add(`task-0`);
   
-  task.classList.add(`task-${counter}`);
+  while(true) {
+    if (localStorage.includes(task.className)) {
+      console.log("includes")
+    } else break;
+  }
 
   localStorage.setItem(`task-${counter}`, todo);
 
