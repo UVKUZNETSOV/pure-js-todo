@@ -4,16 +4,28 @@ const todoInner = document.querySelector(".todo-inner");
 
 let counter = localStorage.length;
 
-for (key in localStorage) {
-  console.log(key)
+const render = () => {
+  for (let i = 0; i < localStorage.length; i++) {
+    const task = document.createElement("div");
+    const text = document.createElement("p");
+    const deleteButton = document.createElement("button");
+
+    text.innerHTML = localStorage.getItem(i);
+
+    todoInner.insertAdjacentElement("beforeend", task);
+    task.insertAdjacentElement("beforeend", text);
+    task.insertAdjacentElement("beforeend", deleteButton);
+
+    task.classList.add(i);
+
+    deleteButton.addEventListener("click", () => {
+      deleteButton.closest("div").remove();
+      localStorage.removeItem(deleteButton.closest("div").className);
+    })
+  }
 }
 
-// for (let i = 1; i < 10; i++) {
-//   let value = localStorage.getItem(`task-${i}`);
-//   if (value) {
-//     console.log(value)
-//   }
-// }
+render();
 
 const postTask = todo => {
   const task = document.createElement("div");
@@ -33,7 +45,7 @@ const postTask = todo => {
   counter += 1;
 
   task.addEventListener("click", () => {
-    task.style.textDecoration = "line-through"
+    task.classList.toggle("completed");
   }) 
 
   deleteButton.addEventListener("click", () => {
