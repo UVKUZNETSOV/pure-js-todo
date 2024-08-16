@@ -17,3 +17,18 @@ body {
   padding: 50px;
 }
 
+.todo-inner div button {
+  cursor: pointer;
+}
+
+.todo-inner div p {
+  cursor: pointer;
+}
+
+.todo-inner div button::after {
+  content: "DELETE";
+}
+
+.completed {
+  text-decoration: line-through;
+}
