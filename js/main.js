@@ -13,6 +13,8 @@ for (key in todoArr) {
   const text = document.createElement("p");
   const deleteButton = document.createElement("button");
 
+  deleteButton.classList.add("delete-btn");
+
   text.innerHTML = todoArr[key];
 
   todoInner.insertAdjacentElement("beforeend", task);
@@ -23,19 +25,26 @@ for (key in todoArr) {
     task.classList.toggle('completed');
   }) 
 
-  console.log(todoArr)
-
   deleteButton.addEventListener("click", () => {
-    deleteButton.closest("div").remove();
-    todoArr = todoArr.filter(todo => todo !== todoArr[key]);
-    localStorage.setItem("todos", JSON.stringify(todoArr))
+    
   })
 }
+
+const deleteButton = document.querySelectorAll(".delete-btn")
+
+deleteButton.forEach(el => {
+  el.addEventListener("click", () => {
+    el.closest("div").remove();
+  })
+})
+
 
 const postTask = todo => {
   const task = document.createElement("div");
   const text = document.createElement("p");
   const deleteButton = document.createElement("button");
+
+  deleteButton.classList.add("delete-btn");
 
   todoArr.push(todo);
 
@@ -52,8 +61,9 @@ const postTask = todo => {
   }) 
 
   deleteButton.addEventListener("click", () => {
-    console.log("OK")
     deleteButton.closest("div").remove();
+    todoArr = todoArr.filter(todo => todo !== todoArr[key]);
+    localStorage.setItem("todos", JSON.stringify(todoArr));
   })
 }
 
