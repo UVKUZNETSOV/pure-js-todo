@@ -19,24 +19,23 @@ for (key in todoArr) {
 
   todoInner.insertAdjacentElement("beforeend", task);
   task.insertAdjacentElement("beforeend", text);
-  task.insertAdjacentElement("beforeend", deleteButton);
+  task.insertAdjacentElement("beforeend", deleteButton);  
 
-  task.addEventListener("click", () => {
-    task.classList.toggle('completed');
-  }) 
-
-  deleteButton.addEventListener("click", () => {
-    
+  deleteButton.addEventListener("click",  () => {
+    deleteButton.closest("div").remove();
+    localStorage.setItem("todos", JSON.stringify(todoArr.filter(todo => todo !== todoArr[key])))
   })
 }
 
-const deleteButton = document.querySelectorAll(".delete-btn")
+const deleteButton = document.querySelectorAll(".delete-btn");
 
-deleteButton.forEach(el => {
-  el.addEventListener("click", () => {
-    el.closest("div").remove();
+deleteButton.forEach(btn => {
+  btn.addEventListener("click", () => {
+    
   })
 })
+
+
 
 
 const postTask = todo => {
@@ -62,13 +61,18 @@ const postTask = todo => {
 
   deleteButton.addEventListener("click", () => {
     deleteButton.closest("div").remove();
-    todoArr = todoArr.filter(todo => todo !== todoArr[key]);
+    for (key in todoArr) {
+      todoArr = todoArr.filter(todo => todo !== todoArr[key]);
+    }
     localStorage.setItem("todos", JSON.stringify(todoArr));
   })
 }
 
-submitButton.addEventListener("click", e => {
-  e.preventDefault();
-  postTask(input.value);
-  input.value = "";
-})
+// submitButton.addEventListener("click", e => {
+//   e.preventDefault();
+//   postTask(input.value);
+//   input.value = "";
+// })
+
+
+// ["1","2","3","4"]
