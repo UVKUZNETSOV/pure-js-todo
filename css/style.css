@@ -11,6 +11,7 @@ input {
 button {
   border: none;
   background-color: transparent;
+  cursor: pointer;
 }
 
 body {
@@ -68,6 +69,7 @@ body {
   border: 1px solid #000;
   width: 97%;
   border-radius: 5px;
+  background-color: #fff;
 }
 
 .todo-inner div button {
@@ -80,6 +82,13 @@ body {
 
 .todo-inner div button::after {
   content: "DELETE";
+}
+
+.delete-all-btn, .mark-as-complited {
+  border: 1px solid #000;
+  border-radius: 50px;
+  padding: 10px 20px 10px 20px;
+  margin-top: 20px;
 }
 
 .completed {
