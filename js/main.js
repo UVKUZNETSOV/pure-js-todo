@@ -10,7 +10,10 @@ if (localStorage.getItem("todos")) {
   todoArr = JSON.parse(localStorage.getItem("todos"));
 }
 
-const render = () => {
+const render = (translate, id) => {
+
+  todoInner.classList.remove("disappear");
+
   for (key in todoArr) {
     const task = document.createElement("div");
     const text = document.createElement("p");
@@ -28,9 +31,14 @@ const render = () => {
   
     temp.setAttribute("id", `${key}`);
     temp.classList.add("todo");
+    task.setAttribute("id", `${key}`);
 
     if (todoArr[key].completed) {
       temp.classList.toggle("completed");
+    }
+
+    if (translate && (key >= id)) {
+      task.classList.add("animated");
     }
   }
 
@@ -47,14 +55,16 @@ const render = () => {
     })
   })
 
-
   deleteButton.forEach(btn => {
     const temp = parseInt(btn.closest("div").getElementsByTagName("p")[0].id);
     btn.addEventListener("click", () => {
       todoArr.splice(temp, 1);
       localStorage.setItem("todos", JSON.stringify(todoArr));
-      todoInner.innerHTML = '';
-      render();
+      btn.closest("div").classList.add("disappear");
+      setTimeout(() => {
+        todoInner.innerHTML = '';
+        render(true, btn.closest("div").id);
+      }, 100);
     })
   })
 }
@@ -73,9 +83,13 @@ submitButton.addEventListener("click", e => {
 })
 
 deleteAllButton.addEventListener("click", () => {
-  todoInner.innerHTML = '';
   todoArr = [];
   localStorage.setItem("todos", todoArr);
+  todoInner.classList.add("disappear");
+  setTimeout(() => {
+    todoInner.innerHTML = '';
+  }, 100);
+
 })
 
 markAllAsCompleted.addEventListener("click", () => {
@@ -83,7 +97,7 @@ markAllAsCompleted.addEventListener("click", () => {
     todoArr[key].completed = true;
     localStorage.setItem("todos", JSON.stringify(todoArr));
     todoInner.innerHTML = '';
-    render();
+    render(true);
   }
 })
 
