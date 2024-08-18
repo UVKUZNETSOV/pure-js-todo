@@ -8,71 +8,48 @@ if (localStorage.getItem("todos")) {
   todoArr = JSON.parse(localStorage.getItem("todos"));
 }
 
-for (key in todoArr) {
-  const task = document.createElement("div");
-  const text = document.createElement("p");
-  const deleteButton = document.createElement("button");
+const render = () => {
+  for (key in todoArr) {
+    const task = document.createElement("div");
+    const text = document.createElement("p");
+    const deleteButton = document.createElement("button");
+  
+    deleteButton.classList.add("delete-btn");
+  
+    text.innerHTML = todoArr[key];
+  
+    todoInner.insertAdjacentElement("beforeend", task);
+    task.insertAdjacentElement("beforeend", text);
+    task.insertAdjacentElement("beforeend", deleteButton);  
+  
+    let temp = deleteButton.closest("div").getElementsByTagName("p")[0];
+  
+    temp.classList.add(`${key}`);
+  }
 
-  deleteButton.classList.add("delete-btn");
+  const deleteButton = document.querySelectorAll(".delete-btn");
 
-  text.innerHTML = todoArr[key];
-
-  todoInner.insertAdjacentElement("beforeend", task);
-  task.insertAdjacentElement("beforeend", text);
-  task.insertAdjacentElement("beforeend", deleteButton);  
-
-  deleteButton.addEventListener("click",  () => {
-    deleteButton.closest("div").remove();
-    localStorage.setItem("todos", JSON.stringify(todoArr.filter(todo => todo !== todoArr[key])))
+  deleteButton.forEach(btn => {
+    let temp = parseInt(btn.closest("div").getElementsByTagName("p")[0].className);
+    btn.addEventListener("click", () => {
+      todoArr.splice(temp, 1);
+      localStorage.setItem("todos", JSON.stringify(todoArr));
+      todoInner.innerHTML = '';
+      render();
+    })
   })
 }
 
-const deleteButton = document.querySelectorAll(".delete-btn");
+render();
 
-deleteButton.forEach(btn => {
-  btn.addEventListener("click", () => {
-    
-  })
-})
-
-
-
-
-const postTask = todo => {
-  const task = document.createElement("div");
-  const text = document.createElement("p");
-  const deleteButton = document.createElement("button");
-
-  deleteButton.classList.add("delete-btn");
-
+const addNewTodo = todo => {
   todoArr.push(todo);
-
-  localStorage.setItem("todos", JSON.stringify(todoArr));
-
-  text.innerHTML = todo;
-
-  todoInner.insertAdjacentElement("beforeend", task);
-  task.insertAdjacentElement("beforeend", text);
-  task.insertAdjacentElement("beforeend", deleteButton);
-
-  task.addEventListener("click", () => {
-    task.classList.toggle('completed');
-  }) 
-
-  deleteButton.addEventListener("click", () => {
-    deleteButton.closest("div").remove();
-    for (key in todoArr) {
-      todoArr = todoArr.filter(todo => todo !== todoArr[key]);
-    }
-    localStorage.setItem("todos", JSON.stringify(todoArr));
-  })
 }
 
-// submitButton.addEventListener("click", e => {
-//   e.preventDefault();
-//   postTask(input.value);
-//   input.value = "";
-// })
-
-
-// ["1","2","3","4"]
+submitButton.addEventListener("click", e => {
+  e.preventDefault();
+  todoArr.push(input.value);
+  localStorage.setItem("todos", JSON.stringify(todoArr));
+  todoInner.innerHTML = '';
+  render();
+})
