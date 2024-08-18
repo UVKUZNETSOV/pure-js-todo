@@ -30,7 +30,7 @@ const render = () => {
   const deleteButton = document.querySelectorAll(".delete-btn");
 
   deleteButton.forEach(btn => {
-    let temp = parseInt(btn.closest("div").getElementsByTagName("p")[0].className);
+    const temp = parseInt(btn.closest("div").getElementsByTagName("p")[0].className);
     btn.addEventListener("click", () => {
       todoArr.splice(temp, 1);
       localStorage.setItem("todos", JSON.stringify(todoArr));
@@ -42,14 +42,13 @@ const render = () => {
 
 render();
 
-const addNewTodo = todo => {
-  todoArr.push(todo);
-}
-
 submitButton.addEventListener("click", e => {
   e.preventDefault();
-  todoArr.push(input.value);
-  localStorage.setItem("todos", JSON.stringify(todoArr));
-  todoInner.innerHTML = '';
-  render();
+  if (input.value) {
+    todoArr.push(input.value);
+    localStorage.setItem("todos", JSON.stringify(todoArr));
+    todoInner.innerHTML = '';
+    input.value = "";
+    render();
+  }
 })
