@@ -1,5 +1,21 @@
+* {
+  box-sizing: border-box;
+}
+
+input {
+  outline: none;
+  border: none;
+  border: 1px solid #000;
+}
+
+button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
 body {
-  background-color: dimgrey;
+  background-color: #292929;
   margin: 0;
   padding: 0;
   display: flex;
@@ -12,11 +28,72 @@ body {
 .container {
   width: 32svw;
   height: 80svh;
-  background-color: #fff;
+  background-color: #6c6c6c;
   border-radius: 20px;
   padding: 50px;
 }
 
+<<<<<<< HEAD
+=======
+.form {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form input, .form button {
+  height: 40px;
+}
+
+.form input {
+  width: 80%;
+}
+
+.form button {
+  color: #fff;
+  background-color: blueviolet;
+  border: 1px solid #000;
+  width: 20%;
+}
+
+.todo-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 20px;
+  overflow: scroll;
+  height: 92%;
+}
+
+.todo-inner div {
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 20px 0px 20px;
+  border: 1px solid #000;
+  width: 97%;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.todo-inner div button {
+  cursor: pointer;
+}
+
+.todo-inner div p {
+  cursor: pointer;
+}
+
+.todo-inner div button::after {
+  content: "DELETE";
+}
+
+.delete-all-btn, .mark-as-complited {
+  border: 1px solid #000;
+  border-radius: 50px;
+  padding: 10px 20px 10px 20px;
+  margin-top: 20px;
+}
+
+>>>>>>> test
 .completed {
   text-decoration: line-through;
 }
