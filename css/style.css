@@ -122,10 +122,17 @@ body {
   padding: 0 20px 0 20px;
   align-items: center;
   position: absolute;
+  bottom: 120px;
   background-color: #000;
   border-radius: 10px;
   width: 400px;
   height: 50px;
+}
+
+.confirmation-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .confirmation h1 {
@@ -135,6 +142,37 @@ body {
 
 .confirmation button {
   color: #fff;
+}
+
+.confirmation-ease-in {
+  animation: confirm-appearence .3s;
+}
+
+.confirmation-ease-out {
+  animation: confirm-disappearence .3s;
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10px;
+}
+
+.progress-bar {
+  width: 40px;
+  max-width: 400px;
+  height: 10px;
+  background-color: #5c5c5c;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress {
+  width: 0;
+  height: 100%;
+  background-color: #fff;
+  animation: fill 3s;
 }
 
 @keyframes delete {
@@ -163,5 +201,32 @@ body {
   to {
     opacity: 0;
     filter: blur(10px);
+  }
+}
+
+@keyframes confirm-appearence {
+  0% {
+    transform: translateY(200px);
+  } 
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes confirm-disappearence {
+  0% {
+    transform: translateY(0px);
+  } 
+  100% {
+    transform: translateY(200px);
+  }
+}
+
+@keyframes fill {
+  0% {
+      width: 0;
+  }
+  100% {
+      width: 100%;
   }
 }

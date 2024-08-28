@@ -63,17 +63,25 @@ const render = (translate, id) => {
 
   deleteButton.forEach(btn => {
     const temp = parseInt(btn.closest("div").getElementsByTagName("p")[0].id);
-    const elem = btn.closest("div").getElementsByTagName("p")[0];
     btn.addEventListener("click", () => {
       confirmation.style.display = "flex";
-      localStorage.setItem("queue", elem);
+      confirmation.classList.add("confirmation-ease-in");
+      localStorage.setItem("queue", JSON.stringify(todoArr[temp]));
+
       setTimeout(() => {
-        confirmation.style.display = "none";
         localStorage.removeItem("queue");
+        confirmation.classList.remove("confirmation-ease-in");
+        confirmation.classList.add("confirmation-ease-out");
+        setTimeout(() => {
+          confirmation.style.display = "none";
+          confirmation.classList.remove("confirmation-ease-out");
+        }, 200);
       }, 3000)
+
       todoArr.splice(temp, 1);
       localStorage.setItem("todos", JSON.stringify(todoArr));
       btn.closest("div").classList.add("disappear");
+
       setTimeout(() => {
         todoInner.innerHTML = '';
         render(true, btn.closest("div").id);
@@ -83,6 +91,13 @@ const render = (translate, id) => {
 }
 
 render();
+
+
+confirmBtn.addEventListener("click", () => {
+  const temp = localStorage.getItem("queue");
+  todoArr.splice();
+  console.log(temp);
+});
 
 submitButton.addEventListener("click", e => {
   e.preventDefault();
