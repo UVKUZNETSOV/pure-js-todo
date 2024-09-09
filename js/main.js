@@ -5,7 +5,7 @@ const todoInner = document.querySelector(".todo-inner");
 let counter = localStorage.length;
 
 const render = () => {
-  for (let i = 0; i < localStorage.length; i++) {
+  for (key in todoArr) {
     const task = document.createElement("div");
     const text = document.createElement("p");
     const deleteButton = document.createElement("button");
@@ -14,48 +14,67 @@ const render = () => {
 
     todoInner.insertAdjacentElement("beforeend", task);
     task.insertAdjacentElement("beforeend", text);
-    task.insertAdjacentElement("beforeend", deleteButton);
+    task.insertAdjacentElement("beforeend", deleteButton);  
+  
+    let temp = deleteButton.closest("div").getElementsByTagName("p")[0];
+  
+    temp.setAttribute("id", `${key}`);
+    temp.classList.add("todo");
 
-    task.classList.add(i);
-
-    deleteButton.addEventListener("click", () => {
-      deleteButton.closest("div").remove();
-      localStorage.removeItem(deleteButton.closest("div").className);
-    })
+    if (todoArr[key].completed) {
+      temp.classList.toggle("completed");
+    }
   }
+
+  const deleteButton = document.querySelectorAll(".delete-btn");
+  const todo = document.querySelectorAll(".todo");
+
+  todo.forEach(todo => {
+    todo.addEventListener("click", () => {
+      todo.classList.toggle("completed");
+      todoArr[todo.id].completed = !todoArr[todo.id].completed;
+      localStorage.setItem("todos", JSON.stringify(todoArr));
+      todoInner.innerHTML = '';
+      render();
+    })
+  })
+
+
+  deleteButton.forEach(btn => {
+    const temp = parseInt(btn.closest("div").getElementsByTagName("p")[0].id);
+    btn.addEventListener("click", () => {
+      todoArr.splice(temp, 1);
+      localStorage.setItem("todos", JSON.stringify(todoArr));
+      todoInner.innerHTML = '';
+      render();
+    })
+  })
 }
 
 render();
 
-const postTask = todo => {
-  const task = document.createElement("div");
-  const text = document.createElement("p");
-  const deleteButton = document.createElement("button");
-
-  text.innerHTML = todo;
-
-  todoInner.insertAdjacentElement("beforeend", task);
-  task.insertAdjacentElement("beforeend", text);
-  task.insertAdjacentElement("beforeend", deleteButton);
-  
-  task.classList.add(`task-${counter}`);
-
-  localStorage.setItem(`task-${counter}`, todo);
-
-  counter += 1;
-
-  task.addEventListener("click", () => {
-    task.classList.toggle("completed");
-  }) 
-
-  deleteButton.addEventListener("click", () => {
-    deleteButton.closest("div").remove();
-    localStorage.removeItem(deleteButton.closest("div").className);
-  })
-}
-
 submitButton.addEventListener("click", e => {
   e.preventDefault();
-  postTask(input.value);
-  input.value = "";
+  if (input.value) {
+    todoArr.push({todo: input.value, completed: false});
+    localStorage.setItem("todos", JSON.stringify(todoArr));
+    todoInner.innerHTML = '';
+    input.value = "";
+    render();
+  }
+})
+
+deleteAllButton.addEventListener("click", () => {
+  todoInner.innerHTML = '';
+  todoArr = [];
+  localStorage.setItem("todos", todoArr);
+})
+
+markAllAsCompleted.addEventListener("click", () => {
+  for (key in todoArr) {
+    todoArr[key].completed = true;
+    localStorage.setItem("todos", JSON.stringify(todoArr));
+    todoInner.innerHTML = '';
+    render();
+  }
 })
