@@ -132,7 +132,7 @@ body {
 .confirmation-inner {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
 }
 
 .confirmation h1 {
